@@ -1,0 +1,15 @@
+import { Component } from '@angular/core';
+import { ApiService } from '../api.service';
+
+@Component({
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.css']
+})
+export class HomePageComponent {
+  x: any;
+  y: any;
+
+  constructor(private apiService: ApiService) { }
+
+}

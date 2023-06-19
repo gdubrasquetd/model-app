@@ -1,0 +1,9 @@
+<h2>Liste des exemples</h2>
+
+<button type="button" (click)="entrainerModele()">Lancer l'entraînement du modèle</button>
+
+<ul>
+  <li *ngFor="let exemple of exemples">
+    x: {{ exemple.x }}, y: {{ exemple.y }}
+  </li>
+</ul>
