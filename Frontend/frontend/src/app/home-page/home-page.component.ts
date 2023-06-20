@@ -7,9 +7,6 @@ import { ApiService } from '../api.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent {
-  x: any;
-  y: any;
-
   constructor(private apiService: ApiService) { }
 
 }

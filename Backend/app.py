@@ -1,26 +1,55 @@
 from flask import Flask, jsonify, request
 from tinydb import TinyDB, Query
+from flask_cors import CORS
+from type.model import Model
+import json
+import uuid
 
 app = Flask(__name__)
-db = TinyDB('database.json')
-examples_table = db.table('examples')
+CORS(app)
+db = TinyDB('../Database/database.json')
+modelDB = db.table('modèles')
+
+model_test = Model(name='Modèle 1', nb_iterations=100, seed=123, type='local')
+
 
 @app.route('/')
 def homepage():
     return jsonify({'message': 'Page d\'accueil'})
 
-@app.route('/ajouter', methods=['POST'])
-def ajouter_exemple():
+@app.route('/add', methods=['POST'])
+def add_model():
     data = request.get_json()
-    x = data['x']
-    y = data['y']
-    examples_table.insert({'x': x, 'y': y})
-    return jsonify({'message': 'Exemple ajouté avec succès'})
+    model = data['model']
+    modelDB.insert({'model': model})
+    
+    return jsonify({'message': 'Model added successfully'})
 
-@app.route('/lister')
-def lister_exemples():
-    exemples = examples_table.all()
-    return jsonify(exemples)
+@app.route('/test', methods=['POST'])
+def test_model():
+    
+    my_model = Model(name='Modèle 1', nb_iterations=100, seed=123, type='local')
+    
+    print("Test 1", my_model)
+    
+    dict_data = my_model.to_dict()
+    
+    print("Test 2", dict_data)
+    
+    databack = Model.from_dict(dict_data)
+ 
+    print("Test 3", databack)
+    
+    dict_data = my_model.to_dict()
+    
+    print("Test 4", dict_data)
+ 
+    return jsonify({'message': 'Model added successfully'})
+
+@app.route('/list')
+def list_models():
+    models = modelDB.all()
+    return jsonify(models)
 
 @app.route('/entrainer')
 def entrainer_modele():
@@ -29,14 +58,7 @@ def entrainer_modele():
 
 @app.route('/inference', methods=['POST'])
 def effectuer_inference():
-    data = request.get_json()
-    x = data['x']
-    exemple = examples_table.search(Query().x == x)
-    if exemple:
-        y = exemple[0]['y']
-        return jsonify({'prediction': y})
-    else:
-        return jsonify({'message': 'Exemple non trouvé'})
+    return jsonify({'message': 'Exemple non trouvé'})
 
 if __name__ == '__main__':
     app.run(debug=True)

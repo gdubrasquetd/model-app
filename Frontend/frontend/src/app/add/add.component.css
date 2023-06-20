@@ -1,0 +1,9 @@
+.container {
+    margin-top: 50px;
+  }
+  
+  .invalid-feedback {
+    display: block;
+    color: red;
+  }
+  

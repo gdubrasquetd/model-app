@@ -1,11 +1,25 @@
-<h2>Page d'ajout</h2>
-
-<form>
-  <label for="x">Valeur de x :</label>
-  <input type="text" id="x" [(ngModel)]="x" name="x">
-
-  <label for="y">Valeur de y :</label>
-  <input type="text" id="y" [(ngModel)]="y" name="y">
-
-  <button type="button" (click)="ajouterExemple()">Ajouter à la base</button>
+<form (ngSubmit)="addModel()">
+  <div class="form-group">
+    <label for="model-name">Nom du modèle :</label>
+    <input type="text" class="form-control" id="model-name" [(ngModel)]="model.name" name="model.name" required>
+  </div>
+  <div class="form-group">
+    <label for="iterations">Nombre d'itérations :</label>
+    <input type="number" class="form-control" id="iterations" [(ngModel)]="model.nbIterations" name="model.nbIterations" required>
+  </div>
+  <div class="form-group">
+    <label for="seed">Seed :</label>
+    <input type="text" class="form-control" id="seed" [(ngModel)]="model.seed" name="model.seed" required>
+  </div>
+  <div class="form-group">
+    <label for="type">Type :</label>
+    <select class="form-control" id="type" [(ngModel)]="model.type" name="model.type" required>
+      <option value="local">Local</option>
+      <option value="serveur">Serveur</option>
+      <option value="mixte">Mixte</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Ajouter le modèle</button>
 </form>
+
+<button (click)="test()">test</button>

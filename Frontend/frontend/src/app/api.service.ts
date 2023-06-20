@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:5000'; // Remplacez par l'URL de votre API Flask
+  private baseUrl = 'http://127.0.0.1:5000'; // Remplacez par l'URL de votre API Flask
 
   constructor(private http: HttpClient) { }
 
@@ -15,14 +16,14 @@ export class ApiService {
     return this.http.post(url, body);
   }
 
-  ajouterExemple(x: any, y: any) {
-    const url = `${this.baseUrl}/ajouter`;
-    const body = { x, y };
+  addModel(model: string) {
+    const url = `${this.baseUrl}/add`;
+    const body = { model };
     return this.http.post(url, body);
   }
 
-  listerExemples() {
-    const url = `${this.baseUrl}/lister`;
+  getModels() {
+    const url = `${this.baseUrl}/list`;
     return this.http.get(url);
   }
 

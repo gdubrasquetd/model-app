@@ -7,21 +7,13 @@ import { ApiService } from '../api.service';
   styleUrls: ['./listing.component.css']
 })
 export class ListingComponent implements OnInit {
-  exemples: any[] = [];
+  models: any[] = [];
 
-  
   constructor(private apiService: ApiService) { }
 
-  ngOnInit() {
-    console.log("we are here")
-    this.apiService.listerExemples().subscribe((response: any) => {
-      this.exemples = response;
+  ngOnInit(): void {
+    this.apiService.getModels().subscribe((response: any) => {
+      this.models = Object.values(response);
     });
   }
-  entrainerModele() {
-    this.apiService.entrainerModele().subscribe(() => {
-      alert('Entraînement terminé');
-    });
-  }
-  
 }

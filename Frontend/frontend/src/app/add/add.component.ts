@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../api.service';
+import { Model } from '../type/model';
 
 @Component({
   selector: 'app-ajout',
@@ -7,16 +8,30 @@ import { ApiService } from '../api.service';
   styleUrls: ['./add.component.css']
 })
 export class AddComponent {
-  x: any;
-  y: any;
+  models!: string;
+  model!: Model;
 
   constructor(private apiService: ApiService) { }
 
-  ajouterExemple() {
-    this.apiService.ajouterExemple(this.x, this.y).subscribe(() => {
-      alert('Exemple ajouté avec succès');
-      this.x = '';
-      this.y = '';
-    });
+  addModel() {
+    this.apiService.addModel(this.models).subscribe(
+      response => {
+        console.log((response as any).message);  // Affiche le message de succès dans la console
+      },
+      error => {
+        console.log(error.error);  // Affiche l'erreur dans la console
+      }
+    );
+  }
+
+  test(){
+    const modelTest: Model = {
+      name: "Model 1",
+      nbIterations: 100,
+      seed: "12345",
+      type: "local"
+    };
+    const modelDict: { [key: string]: any } = { ...modelTest };
+    console.log(modelDict);
   }
 }
