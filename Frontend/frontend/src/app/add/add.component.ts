@@ -9,12 +9,17 @@ import { Model } from '../type/model';
 })
 export class AddComponent {
   models!: string;
-  model!: Model;
+  model: Model = {
+    name: '',
+    nbIterations: 0,
+    seed: '',
+    type: ''
+  };
 
   constructor(private apiService: ApiService) { }
 
   addModel() {
-    this.apiService.addModel(this.models).subscribe(
+    this.apiService.addModel(this.model).subscribe(
       response => {
         console.log((response as any).message);  // Affiche le message de succès dans la console
       },
@@ -22,16 +27,5 @@ export class AddComponent {
         console.log(error.error);  // Affiche l'erreur dans la console
       }
     );
-  }
-
-  test(){
-    const modelTest: Model = {
-      name: "Model 1",
-      nbIterations: 100,
-      seed: "12345",
-      type: "local"
-    };
-    const modelDict: { [key: string]: any } = { ...modelTest };
-    console.log(modelDict);
   }
 }

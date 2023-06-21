@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from tinydb import TinyDB, Query
 from flask_cors import CORS
 from type.model import Model
+from logic import initialize_model
 import json
 import uuid
 
@@ -11,6 +12,11 @@ db = TinyDB('../Database/database.json')
 modelDB = db.table('modèles')
 
 model_test = Model(name='Modèle 1', nb_iterations=100, seed=123, type='local')
+
+@app.before_request
+def comput_model():
+    print("test")
+    #initialize_model()
 
 
 @app.route('/')
@@ -39,6 +45,7 @@ def get_model_by_id(id):
 
     Model = Query()
     model = modelDB.get(Model.model.id == id)
+    print(model)
     if model:
         return jsonify({'model': model}), 200
     else:
@@ -55,6 +62,37 @@ def delete_model_by_id(id):
     else:
         return jsonify({'error': 'Model not found'}), 404
     
+
+@app.route('/update/<id>', methods=['PUT'])
+def update_model(id):
+    data = request.get_json()
+
+    Model = Query()
+    existing_model = modelDB.get(Model.model.id == id)
+    if existing_model:
+        model_params =  existing_model["model"]
+        model_name = data.get('name') if data.get('name') != None else model_params["name"]
+        nb_iterations = data.get('nb_iterations') if data.get('nb_iterations') != None else model_params["nb_iterations"]
+        seed = data.get('seed') if data.get('seed') != None else model_params["seed"]
+        model_type = data.get('type') if data.get('type') != None else model_params["type"]
+        new_model = {"model":
+                    {
+                    'id': id,
+                    'name': model_name,
+                    'nb_iterations': nb_iterations,
+                    'seed': seed,
+                    'type': model_type
+                    }}
+
+        modelDB.update(new_model, Model.model.id == id)
+        updated_model = modelDB.get(Model.model.id == id)
+    
+        return jsonify({'message': 'Model updated successfully'})
+    else:
+        return jsonify({'error': 'Model not found'}), 404
+
+
+
 
 
 @app.route('/test', methods=['POST'])

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Model } from './type/model'; 
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,25 @@ export class ApiService {
     return this.http.post(url, body);
   }
 
-  addModel(model: string) {
+
+  addModel(model: Model): Observable<any> {
     const url = `${this.baseUrl}/add`;
-    const body = { model };
-    return this.http.post(url, body);
+    return this.http.post(url, model);
+  }
+
+  deleteModel(modelId: string): Observable<any> {
+    const url = `${this.baseUrl}/${modelId}`;
+    return this.http.delete(url);
+  }
+
+  getModelById(modelId: string): Observable<Model> {
+    const url = `${this.baseUrl}/${modelId}`;
+    return this.http.get<Model>(url);
   }
 
   getModels() {
     const url = `${this.baseUrl}/list`;
+    const modelList = this.http.get(url)
     return this.http.get(url);
   }
 
