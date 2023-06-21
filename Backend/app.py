@@ -17,13 +17,45 @@ model_test = Model(name='Modèle 1', nb_iterations=100, seed=123, type='local')
 def homepage():
     return jsonify({'message': 'Page d\'accueil'})
 
+
 @app.route('/add', methods=['POST'])
 def add_model():
     data = request.get_json()
-    model = data['model']
-    modelDB.insert({'model': model})
+
+    model_name = data.get('name')
+    nb_iterations = data.get('nb_iterations')
+    seed = data.get('seed')
+    model_type = data.get('type')
+    new_model = Model(model_name,nb_iterations,seed,model_type)
+    model_dict = new_model.to_dict()
+
+    modelDB.insert({'model': model_dict})
+
+    return jsonify({'message': 'Model added successfully', 'id': model_dict["id"]}), 201
+
+
+@app.route('/<id>', methods=['GET'])
+def get_model_by_id(id):
+
+    Model = Query()
+    model = modelDB.get(Model.model.id == id)
+    if model:
+        return jsonify({'model': model}), 200
+    else:
+        return jsonify({'error': 'Model not found'}), 404
     
-    return jsonify({'message': 'Model added successfully'})
+
+@app.route('/<id>', methods=['DELETE'])
+def delete_model_by_id(id):
+    Model = Query()
+    model = modelDB.get(Model.model.id == id)
+    if model:
+        modelDB.remove(Model.model.id == id)
+        return jsonify({'message': 'Model deleted successfully'})
+    else:
+        return jsonify({'error': 'Model not found'}), 404
+    
+
 
 @app.route('/test', methods=['POST'])
 def test_model():
