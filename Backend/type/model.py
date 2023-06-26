@@ -3,13 +3,15 @@ import uuid
 from uuid import UUID
 
 class Model:
-    def __init__(self, name, nb_iterations, seed, type, id=None):
+    def __init__(self, name, nb_iterations, seed, type, data, last_prediction, id=None):
         
         self.id = id if id is not None else uuid.uuid4()
         self.name = name
         self.nb_iterations = nb_iterations
         self.seed = seed
         self.type = type
+        self.data = data
+        self.last_prediction = last_prediction
         
         
     
@@ -22,7 +24,9 @@ class Model:
             'name': self.name,
             'nb_iterations': self.nb_iterations,
             'seed': self.seed,
-            'type': self.type
+            'type': self.type,
+            'data': self.data,
+            'last_prediction': self.last_prediction
         }
     
     @classmethod
@@ -37,7 +41,9 @@ class Model:
             name=model_dict.get('name'),
             nb_iterations=model_dict.get('nb_iterations'),
             seed=model_dict.get('seed'),
-            type=model_dict.get('type')
+            type=model_dict.get('type'),
+            data=model_dict.get('data'),
+            last_prediction=model_dict.get('last_prediction')
         )
 
         return model

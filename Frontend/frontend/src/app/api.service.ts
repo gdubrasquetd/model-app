@@ -39,14 +39,8 @@ export class ApiService {
     return this.http.get(url);
   }
 
-  effectuerInference(x: any) {
-    const url = `${this.baseUrl}/inference`;
-    const body = { x };
-    return this.http.post(url, body);
-  }
-
-  entrainerModele() {
-    const url = `${this.baseUrl}/entrainer`;
+  trainModel(modelId: string): Observable<any> {
+    const url = `${this.baseUrl}/train/${modelId}`;
     return this.http.get(url);
   }
 }

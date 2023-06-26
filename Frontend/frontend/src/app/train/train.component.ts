@@ -3,11 +3,11 @@ import { ApiService } from '../api.service';
 import { Model } from '../type/model';
 
 @Component({
-  selector: 'app-listing',
-  templateUrl: './listing.component.html',
-  styleUrls: ['./listing.component.css']
+  selector: 'app-train',
+  templateUrl: './train.component.html',
+  styleUrls: ['./train.component.css']
 })
-export class ListingComponent implements OnInit {
+export class TrainComponent {
   models: Model[] = [];
 
   constructor(private apiService: ApiService) { }
@@ -33,10 +33,9 @@ export class ListingComponent implements OnInit {
   deleteModelById(modelId: string): void {
     this.apiService.deleteModel(modelId).subscribe(
       response => {
-        console.log((response as any).message);  // Affiche le message de succès dans la console
-        // Mettez à jour la liste des modèles après la suppression
+        console.log((response as any).message);  
         this.apiService.getModels().subscribe(() => {
-          window.location.reload(); // Actualise la page
+          window.location.reload();
         });
       },
       error => {
@@ -49,15 +48,13 @@ export class ListingComponent implements OnInit {
     this.apiService.trainModel(modelId).subscribe(
       response => {
         console.log((response as any).message);  
-        this.apiService.getModels().subscribe(() => {
-          window.location.reload(); // Actualise la page
-        });
       },
       error => {
         console.log(error.error);  // Affiche l'erreur dans la console
       }
     );
   }
+  
   
   
 }

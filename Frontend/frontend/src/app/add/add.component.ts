@@ -11,14 +11,17 @@ export class AddComponent {
   models!: string;
   model: Model = {
     name: '',
-    nbIterations: 0,
+    nb_iterations: 0,
     seed: '',
-    type: ''
+    type: '',
+    data: [0,0],
+    last_prediction: 0
   };
 
   constructor(private apiService: ApiService) { }
 
   addModel() {
+    console.log(this.model)
     this.apiService.addModel(this.model).subscribe(
       response => {
         console.log((response as any).message);  // Affiche le message de succès dans la console

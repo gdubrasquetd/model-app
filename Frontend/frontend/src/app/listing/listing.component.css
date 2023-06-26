@@ -1,27 +1,35 @@
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
 .card {
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px;
+  background-color: antiquewhite;
 }
 
 .btn-square {
   width: 40px;
   height: 40px;
-  padding: 0;
-  border-radius: 0;
-}
-
-.font-weight-bold {
-  font-weight: bold;
+  margin-top: 2%;
+  border-radius: 20px;
 }
 
 .list-group-item {
   border: none;
   padding: 5px 0;
+}
+
+.head {
+  display: flex;
+}
+
+.name {
+  font-size: xx-large;
+  margin-right: 5%;
+}
+
+.title {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bolder;
+  margin-bottom: 3%;
+}
+
+.col-md-4 {
+  padding-inline: 6%;
 }

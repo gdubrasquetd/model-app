@@ -1,19 +1,26 @@
 <div *ngIf="models.length > 0">
-  <h2>List of Models</h2>
-  <div class="col-md-6" *ngFor="let model of models">
-    <h3 class="font-weight-bold">{{ model.name }}</h3>
-    <div>
+  <h2 class="title">List of Models</h2>
+  <div class="col-md-4" *ngFor="let model of models">
+    <div class="head">
+    <h3 class="name">{{ model.name }}</h3>
       <button class="btn btn-secondary btn-square" (click)="model.id && deleteModelById(model.id)">
         <i class="bi bi-trash3"></i>
       </button>
-            <button class="btn btn-secondary btn-square"><i class="bi bi-pencil"></i></button>
+      <button class="btn btn-secondary btn-square">
+        <i class="bi bi-pencil"></i>
+      </button>
+      <button class="btn btn-secondary btn-square"(click)="model.id && trainModelById(model.id)">
+        <i class="bi bi-clipboard-data"></i>
+      </button>
     </div>
-    <div class="card-body">
+    <div>
       <ul class="list-group">
         <li class="list-group-item"><strong>ID:</strong> {{ model.id }}</li>
-        <li class="list-group-item"><strong>Number of Iterations:</strong> {{ model.nbIterations }}</li>
+        <li class="list-group-item"><strong>Number of Iterations:</strong> {{ model.nb_iterations }}</li>
         <li class="list-group-item"><strong>Seed:</strong> {{ model.seed }}</li>
         <li class="list-group-item"><strong>Type:</strong> {{ model.type }}</li>
+        <li class="list-group-item"><strong>Data:</strong> {{ model.data }}</li>
+        <li class="list-group-item"><strong>Last Prediction:</strong> {{ model.last_prediction }}</li>
       </ul>
     </div>
 </div>

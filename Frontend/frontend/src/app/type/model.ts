@@ -1,8 +1,10 @@
 export interface Model {
     id?: string;
     name: string;
-    nbIterations: number;
+    nb_iterations: number;
     seed: string;
     type: string;
+    data: [number, number];
+    last_prediction?: number;
   }
   

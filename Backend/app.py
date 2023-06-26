@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from tinydb import TinyDB, Query
 from flask_cors import CORS
 from type.model import Model
-#from logic import initialize_model
+from logic import create_model, train_model
+import numpy as np
 import os
 import uuid
 
@@ -13,13 +14,12 @@ database_path = os.path.join(current_dir, '../Database/database.json')
 db = TinyDB(database_path)
 modelDB = db.table('modèles')
 
-model_test = Model(name='Modèle 1', nb_iterations=100, seed=123, type='local')
+model_test = Model(name='Modèle 1', nb_iterations=100, seed=123, type='local', data=[0.0], last_prediction=0)
 
 #Initialise the model at the start of the server
 @app.before_request
 def compute_model():
-    print("compute")
-    #initialize_model()
+    create_model()
 
 
 @app.route('/')
@@ -36,7 +36,9 @@ def add_model():
     nb_iterations = data.get('nb_iterations')
     seed = data.get('seed')
     model_type = data.get('type')
-    new_model = Model(id = model_id, name = model_name,nb_iterations = nb_iterations,seed = seed,type = model_type)
+    model_data = data.get('data')
+    last_prediction = data.get('last_prediction')
+    new_model = Model(id = model_id, name = model_name,nb_iterations = nb_iterations,seed = seed,type = model_type, data=model_data, last_prediction=last_prediction)
     model_dict = new_model.to_dict()
 
     modelDB.insert({'model': model_dict})
@@ -78,26 +80,53 @@ def update_model(id):
         nb_iterations = data.get('nb_iterations') if data.get('nb_iterations') != None else model_params["nb_iterations"]
         seed = data.get('seed') if data.get('seed') != None else model_params["seed"]
         model_type = data.get('type') if data.get('type') != None else model_params["type"]
+        model_data = data.get('data') if data.get('data') != None else model_params["data"]
+        last_prediction = data.get('last_prediction') if data.get('last_prediction') != None else model_params["last_prediction"]
         new_model = {"model":
                     {
                     'id': id,
                     'name': model_name,
                     'nb_iterations': nb_iterations,
                     'seed': seed,
-                    'type': model_type
+                    'type': model_type,
+                    'data': model_data,
+                    'last_prediction': last_prediction
                     }}
 
         modelDB.update(new_model, Model.model.id == id)
         updated_model = modelDB.get(Model.model.id == id)
-        print(updated_model)
     
         return jsonify({'message': 'Model updated successfully', 'model': updated_model['model']}), 200
     else:
         return jsonify({'error': 'Model not found'}), 404
 
 
+@app.route('/train/<id>', methods=['GET'])
+def train(id):
 
+    Model = Query()
+    model = modelDB.get(Model.model.id == id)
+    if model:
+        model_params =  model["model"]
+        data1 = model_params.get('data')[0]
+        data2 = model_params.get('data')[1]
+        predict = train_model(np.array([[data1]]), np.array([[data2]]))
+        model_params["last_prediction"] = predict.tolist()[0]
+        new_model = {"model":
+            {
+            'id': model_params.get('id'),
+            'name': model_params.get('name'),
+            'nb_iterations': model_params.get('nb_iteration'),
+            'seed': model_params.get('seed'),
+            'type': model_params.get('type'),
+            'data': model_params.get('data'),
+            'last_prediction': predict.tolist()[0]
 
+            }}
+        modelDB.update(new_model, Model.model.id == id)
+        return jsonify({'message': 'Entraînement terminé.', 'result': predict.tolist()[0]}), 200
+    else:
+        return jsonify({'error': 'Model not found'}), 404
 
 @app.route('/test', methods=['POST'])
 def test_model():
