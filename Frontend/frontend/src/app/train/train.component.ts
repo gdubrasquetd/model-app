@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
-import { Model } from '../type/model';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-train',
@@ -8,53 +7,53 @@ import { Model } from '../type/model';
   styleUrls: ['./train.component.css']
 })
 export class TrainComponent {
-  models: Model[] = [];
+  dataForm: FormGroup;
+  list1: number[] = [];
+  list2: number[] = [];
 
-  constructor(private apiService: ApiService) { }
-
-  ngOnInit(): void {
-    this.apiService.getModels().subscribe((response: any) => {
-      const models: Model[] = [];
-      Object.values(response).forEach((item: any) => {
-        const model: Model = {
-          id: item.model.id,
-          name: item.model.name,
-          nb_iterations: item.model.nb_iterations,
-          seed: item.model.seed,
-          type: item.model.type,
-          data: item.model.data,
-          last_prediction: item.model.last_prediction
-        };
-        models.push(model);
-      });
-      this.models = models;
+  constructor(private formBuilder: FormBuilder) {
+    this.dataForm = this.formBuilder.group({
+      dataPairs: this.formBuilder.array([])
     });
   }
-  deleteModelById(modelId: string): void {
-    this.apiService.deleteModel(modelId).subscribe(
-      response => {
-        console.log((response as any).message);  
-        this.apiService.getModels().subscribe(() => {
-          window.location.reload();
-        });
-      },
-      error => {
-        console.log(error.error);  // Affiche l'erreur dans la console
-      }
-    );
+
+  ngOnInit() {
+    this.addPair();
   }
 
-  trainModelById(modelId: string): void {
-    this.apiService.trainModel(modelId).subscribe(
-      response => {
-        console.log((response as any).message);  
-      },
-      error => {
-        console.log(error.error);  // Affiche l'erreur dans la console
-      }
-    );
+  get dataPairs(): FormArray {
+    return this.dataForm.get('dataPairs') as FormArray;
   }
-  
-  
-  
+
+  addPair() {
+    const pair = this.formBuilder.group({
+      number1: ['', Validators.required],
+      number2: ['', Validators.required]
+    });
+
+    this.dataPairs.push(pair);
+  }
+
+  removePair(index: number) {
+    this.dataPairs.removeAt(index);
+  }
+
+  onSubmit() {
+    if (this.dataForm.valid) {
+      this.list1 = [];
+      this.list2 = [];
+
+      const pairs = this.dataForm.value.dataPairs;
+
+      for (const pair of pairs) {
+        this.list1.push(pair.number1);
+        this.list2.push(pair.number2);
+      }
+
+      console.log('List 1:', this.list1);
+      console.log('List 2:', this.list2);
+    } else {
+      // Display error messages or take any other action if the form is not valid
+    }
+  }
 }

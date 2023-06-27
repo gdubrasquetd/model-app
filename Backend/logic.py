@@ -9,18 +9,14 @@ def create_model():
     return model
 
 
-def train_model(X, y, epochs = 100):
-    model = create_model()
+def train_model(X, y, model, epochs=100):
+    X = np.array(X).reshape(-1, 1)  # Reshape X to have shape (None, 1)
+    y = np.array(y).reshape(-1, 1)  # Reshape y to have shape (None, 1)
     model.compile(loss='mean_squared_error', optimizer='adam')
     model.fit(X, y, epochs=epochs, verbose=1)
+    return model
 
-    test_input = np.array([[150.0]])
-    predicted_price = model.predict(test_input)
+def predict_model(model, X):
+    predicted_price = model.predict(np.array([[X]]))
     print(f'Prix prédit : {predicted_price[0][0]:.2f}')
     return predicted_price
-
-if __name__ == '__main__':
-    superficie = np.random.rand(100, 1) * 200
-    price = 50 + 4 * superficie + np.random.randn(100, 1) * 10
-
-    train_model(25, 650)

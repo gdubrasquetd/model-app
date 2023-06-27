@@ -1,6 +1,7 @@
 .row {
   margin: 0px;
   display: flex;
+  width: 34%;
 }
 
 .form-group {

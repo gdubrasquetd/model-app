@@ -43,4 +43,9 @@ export class ApiService {
     const url = `${this.baseUrl}/train/${modelId}`;
     return this.http.get(url);
   }
+
+  predictModel(modelId: string): Observable<any> {
+    const url = `${this.baseUrl}/predict/${modelId}`;
+    return this.http.get(url);
+  }
 }

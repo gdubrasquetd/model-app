@@ -1,0 +1,13 @@
+.row {
+    margin: 0px;
+    display: flex;
+  }
+  
+  .form-group {
+    width: 30%;
+  }
+  
+  .global {
+    margin-left: 40%;
+  }
+  

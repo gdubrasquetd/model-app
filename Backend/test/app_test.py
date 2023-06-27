@@ -18,8 +18,9 @@ class CRUDTests(unittest.TestCase):
                 'nb_iterations': 100,
                 'seed': 123,
                 'type': 'local',
-                'data': [25, 56],
-                'last_prediction': 46
+                'data': [[25], [56]],
+                'input': 50,
+                'prediction': 46
                 }
 
     def setUp(self):
@@ -61,8 +62,9 @@ class CRUDTests(unittest.TestCase):
             'nb_iterations': 200,
             'seed': 456,
             'type': 'mixte',
-            'data': [25, 56],
-            'last_prediction': 46
+            'data': [[25], [56]],
+            'input': 5,
+            'prediction': 46
         }
         response = self.app.put('/update/1', json=data)
         self.assertEqual(response.status_code, 200)
@@ -78,8 +80,9 @@ class CRUDTests(unittest.TestCase):
             'nb_iterations': 200,
             'seed': 456,
             'type': 'mixte',
-            'data': [25, 56],
-            'last_prediction': 46
+            'data': [[25], [56]],
+            'input': 5,
+            'prediction': 46
         }
         response = self.app.put('/update/100', json=data)
         self.assertEqual(response.status_code, 404)

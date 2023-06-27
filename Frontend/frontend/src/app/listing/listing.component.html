@@ -12,6 +12,9 @@
       <button class="btn btn-secondary btn-square"(click)="model.id && trainModelById(model.id)">
         <i class="bi bi-clipboard-data"></i>
       </button>
+      <button class="btn btn-secondary btn-square"(click)="model.id && predictModelById(model.id)">
+        <i class="bi bi-cpu"></i>
+      </button>
     </div>
     <div>
       <ul class="list-group">
@@ -20,7 +23,8 @@
         <li class="list-group-item"><strong>Seed:</strong> {{ model.seed }}</li>
         <li class="list-group-item"><strong>Type:</strong> {{ model.type }}</li>
         <li class="list-group-item"><strong>Data:</strong> {{ model.data }}</li>
-        <li class="list-group-item"><strong>Last Prediction:</strong> {{ model.last_prediction }}</li>
+        <li class="list-group-item"><strong>Input:</strong> {{ model.input }}</li>
+        <li class="list-group-item"><strong>Prediction:</strong> {{ model.prediction }}</li>
       </ul>
     </div>
 </div>

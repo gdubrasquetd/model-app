@@ -23,7 +23,8 @@ export class ListingComponent implements OnInit {
           seed: item.model.seed,
           type: item.model.type,
           data: item.model.data,
-          last_prediction: item.model.last_prediction
+          input: item.model.input,
+          prediction: item.model.prediction
         };
         models.push(model);
       });
@@ -47,6 +48,19 @@ export class ListingComponent implements OnInit {
 
   trainModelById(modelId: string): void {
     this.apiService.trainModel(modelId).subscribe(
+      response => {
+        console.log((response as any).message);  
+        this.apiService.getModels().subscribe(() => {
+        });
+      },
+      error => {
+        console.log(error.error);  // Affiche l'erreur dans la console
+      }
+    );
+  }
+
+  predictModelById(modelId: string): void {
+    this.apiService.predictModel(modelId).subscribe(
       response => {
         console.log((response as any).message);  
         this.apiService.getModels().subscribe(() => {

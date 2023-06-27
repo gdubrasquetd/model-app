@@ -19,16 +19,34 @@
       <option value="mixte">Mixte</option>
     </select>
   </div>
-  <div class="form-group">
-    <label for="data">Données :</label>
-    <div class="row">
-      <div class="col">
-        <input type="number" class="form-control" id="data1" [(ngModel)]="model.data[0]" name="model.data[0]" required>
-      </div>
-      <div class="col">
-        <input type="number" class="form-control" id="data2" [(ngModel)]="model.data[1]" name="model.data[1]" required>
+
+
+
+  <form [formGroup]="dataForm">
+    <div formArrayName="dataPairs">
+      <label for="input">Data :</label>
+      <div *ngFor="let pair of dataPairs.controls; let i = index">
+        <div [formGroupName]="i" class="row">
+          <div class="col">
+            <input type="number" formControlName="number1" class="form-control" required>
+          </div>
+          <div class="col">
+            <input type="number" formControlName="number2" class="form-control" required>
+          </div>
+          <div class="col">
+            <button type="button" (click)="removePair(i)"><i class="bi bi-dash"></i></button>
+          </div>
+        </div>
       </div>
     </div>
+    <button type="button" (click)="addPair()"><i class="bi bi-plus"></i></button>
+  </form>
+
+
+  <div class="form-group">
+    <label for="input">Input :</label>
+    <input type="number" class="form-control" id="input" [(ngModel)]="model.input" name="model.input" required>
   </div>
+
   <button type="submit" class="btn btn-primary">Ajouter le modèle</button>
 </form>

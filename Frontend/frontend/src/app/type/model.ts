@@ -4,7 +4,8 @@ export interface Model {
     nb_iterations: number;
     seed: string;
     type: string;
-    data: [number, number];
-    last_prediction?: number;
+    data: [number[], number[]];
+    input: number;
+    prediction?: number;
   }
   
