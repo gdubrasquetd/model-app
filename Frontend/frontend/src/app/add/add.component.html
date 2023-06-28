@@ -51,9 +51,15 @@
           <input type="number" class="form-control" id="input" [(ngModel)]="model.input" name="model.input" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Ajouter le modèle</button>
-        
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#modelAddedModal">Ajouter le modèle</button>
       </form>
-
+  
     </div>
+  </div>
+  
+<!-- Model added modal -->
+<div class="modal fade" id="modelAddedModal" aria-labelledby="modelAddedModalLabel">
+  <div class="modal-content">
+    <p>Modèle ajouté!</p>
+  </div>
 </div>

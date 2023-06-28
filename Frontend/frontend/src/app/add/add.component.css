@@ -21,3 +21,14 @@
   padding: 2%;
 
 }
+
+.modal {
+  margin-top: 35%;
+  margin-left: 45%;
+  width: 10%;
+}
+
+.modal-content {
+  padding-top: 10px;
+  text-align: center;
+}

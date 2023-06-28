@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Model } from '../type/model';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { ViewChild } from '@angular/core';
 
+declare var $: any;
 
 @Component({
   selector: 'app-ajout',
@@ -69,11 +71,19 @@ export class AddComponent {
     this.model.data = [this.list1,this.list2]
     this.apiService.addModel(this.model).subscribe(
       response => {
-        console.log((response as any).message);  // Affiche le message de succès dans la console
+        console.log((response as any).message);
       },
       error => {
-        console.log(error.error);  // Affiche l'erreur dans la console
+        console.log(error.error); 
       }
     );
+    $('#modelAddedModal').modal('show');
+
+    // Automatically close the modal after 1 second
+    setTimeout(() => {
+      $('#modelAddedModal').modal('hide');
+      window.location.reload();
+    }, 600);
+
   }
 }
