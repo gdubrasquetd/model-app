@@ -75,9 +75,9 @@ Follow these steps to get the application up and running:
    - Click on the "Train Model" button located on the "Lister" page.
    - This will initiate the training process for the machine learning model.
   
-4. **Train the Model**:
-   - Click on the "Train Model" button located on the "List Examples" page.
-   - This will update the prediction field on your model.
+4. **Predict from Model**:
+   - Click on the "Predict Model" button located on the "Lister" page.
+   - This will update the prediction field on your trained model.
 
 ## License
 
