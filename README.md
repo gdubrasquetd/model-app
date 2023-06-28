@@ -4,7 +4,7 @@ This is a basic website that allows you to execute machine learning models. It i
 
 ## Demo
 
-TODO
+https://github.com/gdubrasquetd/model-app/assets/58482474/51568670-0aed-4902-a1a8-31d26f6e42c9
 
 ## Features
 
