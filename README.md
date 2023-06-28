@@ -11,7 +11,7 @@ https://github.com/gdubrasquetd/model-app/assets/58482474/51568670-0aed-4902-a1a
 - Add examples to the database
 - List the examples stored in the database
 - Train the machine learning model
-- Perform inference using the trained model
+- Predict using the trained model
 
 ## Prerequisites
 
@@ -63,17 +63,21 @@ Follow these steps to get the application up and running:
 ## Usage
 
 1. **Add Examples**:
-   - Click on the "Add Example" page in the navigation bar.
-   - Fill in the input fields with the desired values and click the "Add" button.
-   - The example will be added to the database.
+   - Click on the "Ajouter" page in the navigation bar.
+   - Fill in the input fields with the desired values and click the "Ajouter le modèle" button.
+   - The model will be added to the database.
 
-2. **List Examples**:
-   - Click on the "List Examples" page in the navigation bar.
-   - The page will display a list of all examples stored in the database.
+2. **List models**:
+   - Click on the "Lister" page in the navigation bar.
+   - The page will display a list of all models stored in the database.
 
 3. **Train the Model**:
-   - Click on the "Train Model" button located on the "List Examples" page.
+   - Click on the "Train Model" button located on the "Lister" page.
    - This will initiate the training process for the machine learning model.
+  
+4. **Train the Model**:
+   - Click on the "Train Model" button located on the "List Examples" page.
+   - This will update the prediction field on your model.
 
 ## License
 
