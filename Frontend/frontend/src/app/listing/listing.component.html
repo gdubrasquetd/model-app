@@ -1,6 +1,7 @@
+
 <div *ngIf="models.length > 0">
-  <h2 class="title">List of Models</h2>
-  <div class="col-md-4" *ngFor="let model of models">
+  <h2 class="title">Liste des Modèles</h2>
+  <div class="card col-md-8" *ngFor="let model of models">
     <div class="head">
     <h3 class="name">{{ model.name }}</h3>
       <button class="btn btn-secondary btn-square" (click)="model.id && deleteModelById(model.id)">
@@ -16,19 +17,28 @@
         <i class="bi bi-cpu"></i>
       </button>
     </div>
-    <div>
+    <div class="card-body">
       <ul class="list-group">
         <li class="list-group-item"><strong>ID:</strong> {{ model.id }}</li>
-        <li class="list-group-item"><strong>Number of Iterations:</strong> {{ model.nb_iterations }}</li>
+        <li class="list-group-item"><strong>Nombre d'Iterations:</strong> {{ model.nb_iterations }}</li>
         <li class="list-group-item"><strong>Seed:</strong> {{ model.seed }}</li>
         <li class="list-group-item"><strong>Type:</strong> {{ model.type }}</li>
-        <li class="list-group-item"><strong>Data:</strong> {{ model.data }}</li>
+        <li class="list-group-item">
+          <strong>Data x : </strong> {{ model.data[0] }}
+        </li>
+        <li class="list-group-item">
+          <strong>Data y: </strong> {{ model.data[1] }}
+        </li>
+        
         <li class="list-group-item"><strong>Input:</strong> {{ model.input }}</li>
         <li class="list-group-item"><strong>Prediction:</strong> {{ model.prediction }}</li>
       </ul>
     </div>
+  </div>
 </div>
 
 <div *ngIf="models.length === 0">
   <p>No models available.</p>
 </div>
+
+

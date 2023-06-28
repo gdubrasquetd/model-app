@@ -1,13 +1,23 @@
 .row {
   margin: 0px;
   display: flex;
-  width: 34%;
+  width: 100%;
 }
 
 .form-group {
-  width: 30%;
+  width: 100%;
 }
 
 .global {
+  margin-left: 0%;
+}
+
+.card {
+  background-color: lightblue;
+  margin: 1%;
+  border-radius: 3%;
+  width: 20%;
   margin-left: 40%;
+  padding: 2%;
+
 }
